@@ -58,7 +58,7 @@ func _process(delta):
 		elif (health <= 0.0):
 			hide()
 			position.x = 155
-			position.y = 415
+			position.y = 400
 			health = 100
 			emit_signal("death")
 			show()
