@@ -2,12 +2,14 @@ extends Area2D
 var health = 100
 var speed = 400
 var damageStrength = 25.0
-var damageTimer = 20
+var damageTimer = 2
 var damageTimerDelta = 0
 var currentDamageTimer = 0
 var playerWasHit
 var maxJump = 200
-var floorPosition = 424
+var floorPosition = 423
+
+signal death
 
 var isJumping = false
 var jumpDisabled = false
@@ -55,3 +57,8 @@ func _process(delta):
 			health = health - damageStrength
 		elif (health <= 0.0):
 			hide()
+			position.x = 155
+			position.y = 415
+			health = 100
+			emit_signal("death")
+			show()

@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Models/Enemy/Spike sprite-1.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Models/Enemy/Small Spike sprite-1.png" type="Texture" id=2]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 1 ) ],
+"loop": true,
+"name": "move",
+"speed": 1.5
+} ]
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 62.4004
+
+[node name="Area2D" type="Area2D"]
+
+[node name="Enemy Sprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "move"
+playing = true
+
+[node name="Enemy Hitbox" type="CollisionShape2D" parent="."]
+position = Vector2( 5.04538, 13.4543 )
+shape = SubResource( 2 )
