@@ -1,8 +1,8 @@
 extends Area2D
 #References to variables
-var health = 100
+var health = 10
 var speed = 400
-var damageStrength = 25.0
+var damageStrength = 1.5
 var damageTimer = 2
 var damageTimerDelta = 0
 var currentDamageTimer = 0
@@ -12,6 +12,8 @@ var floorPosition = 423
 
 #Reference to death signal
 signal death
+signal playerHealth(currentHealth)
+
 
 #Bool references
 var isJumping = false
@@ -26,8 +28,17 @@ func playerHit(area):
 # warning-ignore:unused_argument
 func playerNotHit(area):
 	playerWasHit = false
-		
+	
+func boostHealth() :
+	health += 1
+	
+func _ready():
+	var healthBoost = get_tree().get_root().find_node("Main", true, false)
+	healthBoost.connect("healthBoost", self, "boostHealth")
+	
 func _process(delta):
+	
+	emit_signal("playerHealth", health)
 	var velocity = Vector2() #Players movement vector
 	#Detects key presses and changes velocity based on them
 	if Input.is_action_pressed("ui_right"):
@@ -68,16 +79,20 @@ func _process(delta):
 		#Sets a timer adjusted for frame rate
 		damageTimerDelta = damageTimer / delta
 		#Counts up damage timer if not completed
+		if(playerWasHit && Input.is_action_pressed("ui_fight")):
+			currentDamageTimer = 0
+			
 		if (currentDamageTimer <= damageTimerDelta) :
 			currentDamageTimer += 1
 		#Gives player damage if not dead
-		elif (health > 0.0) :
-			health = health - damageStrength
+		if (health > 0.0 && currentDamageTimer >= damageTimerDelta) :
+			health -= damageStrength
+			currentDamageTimer = 0
 		#Resets player when they die
-		elif (health <= 0.0):
+		if (health <= 0.0):
 			hide()
 			position.x = 155
 			position.y = 400
-			health = 100
+			health = 10
 			emit_signal("death")
 			show()

@@ -1,13 +1,37 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Enemy.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/Models/Player/hearts.png" type="Texture" id=4]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 64, 600, 0, 0, 0, 0, 128, 600, 0, 0, 0, 0, 192, 600, 0, 0, 0, 0, 256, 600, 0, 0, 0, 0, 320, 600, 0, 0, 0, 0, 384, 600, 0, 0, 0, 0, 448, 600, 0, 0, 0, 0, 512, 600, 0, 0, 0, 0, 576, 600, 0, 0, 0, 0, 640, 600, 0, 0, 0, 0, 704, 600, 0, 0, 0, 0, 768, 600, 0, 0, 0, 0, 832, 600, 0, 0, 0, 0, 896, 600, 0, 0, 0, 0, 960, 600, 0, 0, 0, 0, 64, 600 )
 }
+
+[sub_resource type="AtlasTexture" id=2]
+flags = 4
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=3]
+flags = 4
+atlas = ExtResource( 4 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=4]
+flags = 4
+atlas = ExtResource( 4 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
+"loop": false,
+"name": "health",
+"speed": 0.0
+} ]
 
 [node name="Main" type="Node"]
 script = ExtResource( 1 )
@@ -19,3 +43,35 @@ curve = SubResource( 1 )
 
 [node name="EnemySpawnLocation" type="PathFollow2D" parent="EnemyPath"]
 position = Vector2( 64, 600 )
+
+[node name="PlayerHealth" type="Node" parent="."]
+
+[node name="PlayerHeart1" type="AnimatedSprite" parent="PlayerHealth"]
+position = Vector2( 96, 552 )
+z_index = 1
+frames = SubResource( 5 )
+animation = "health"
+
+[node name="PlayerHeart2" type="AnimatedSprite" parent="PlayerHealth"]
+position = Vector2( 128, 552 )
+z_index = 1
+frames = SubResource( 5 )
+animation = "health"
+
+[node name="PlayerHeart3" type="AnimatedSprite" parent="PlayerHealth"]
+position = Vector2( 160, 552 )
+z_index = 1
+frames = SubResource( 5 )
+animation = "health"
+
+[node name="PlayerHeart4" type="AnimatedSprite" parent="PlayerHealth"]
+position = Vector2( 192, 552 )
+z_index = 1
+frames = SubResource( 5 )
+animation = "health"
+
+[node name="PlayerHeart5" type="AnimatedSprite" parent="PlayerHealth"]
+position = Vector2( 224, 552 )
+z_index = 1
+frames = SubResource( 5 )
+animation = "health"

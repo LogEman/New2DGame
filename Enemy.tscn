@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Assets/Models/Enemy/Spike sprite-1.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Models/Enemy/Small Spike sprite-1.png" type="Texture" id=2]
+[ext_resource path="res://Enemy.gd" type="Script" id=3]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -14,7 +15,8 @@ animations = [ {
 [sub_resource type="CircleShape2D" id=2]
 radius = 62.4004
 
-[node name="Area2D" type="Area2D"]
+[node name="Enemy" type="Area2D"]
+script = ExtResource( 3 )
 
 [node name="Enemy Sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
@@ -24,3 +26,9 @@ playing = true
 [node name="Enemy Hitbox" type="CollisionShape2D" parent="."]
 position = Vector2( 5.04538, 13.4543 )
 shape = SubResource( 2 )
+
+[node name="cooldown" type="Timer" parent="."]
+one_shot = true
+[connection signal="area_entered" from="." to="." method="playerEnter"]
+[connection signal="area_exited" from="." to="." method="playerExit"]
+[connection signal="timeout" from="cooldown" to="." method="cooldown_complete"]
