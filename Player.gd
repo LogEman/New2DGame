@@ -9,6 +9,7 @@ var currentDamageTimer = 0
 var playerWasHit
 var maxJump = 200
 var floorPosition = 423
+var maxHealth = 10
 
 #Reference to death signal
 signal death
@@ -37,8 +38,9 @@ func _ready():
 	healthBoost.connect("healthBoost", self, "boostHealth")
 	
 func _process(delta):
-	
 	emit_signal("playerHealth", health)
+	if(health > maxHealth) :
+		health -= 1
 	var velocity = Vector2() #Players movement vector
 	#Detects key presses and changes velocity based on them
 	if Input.is_action_pressed("ui_right"):
